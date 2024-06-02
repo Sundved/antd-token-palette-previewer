@@ -18,7 +18,7 @@ export default defineConfig({
     logo: `${sitePrefix}/icon/theme-editor.svg`,
   },
   favicons: [`${sitePrefix}/icon/theme-editor.svg`],
-  outputPath: '.doc',
+  outputPath: 'dist',
   ssr: process.env.NODE_ENV === 'production' ? {} : false,
   exportStatic: {},
   base: isProdSite ? '/antd-token-previewer/' : '/',

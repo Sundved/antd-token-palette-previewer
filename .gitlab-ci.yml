@@ -11,7 +11,7 @@ variables:
 
     # Application
     NODE_IMAGE: node:18.20.2
-    BUILD_OUTPUT_FOLDER: .doc
+    BUILD_OUTPUT_FOLDER: dist
     NPM_REGISTRY: "https://registry.npmjs.org"
     NPM_REGISTRY_PUBLISH: "https://nexus.inno.tech/repository/prmo-hosted-npm-development"
     NPMRC_FILE_CONTENTS: |-
