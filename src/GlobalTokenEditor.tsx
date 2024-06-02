@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import type { FC } from 'react';
 import React, { useState } from 'react';
-import type {MutableTheme, SelectedToken, Theme} from './interface';
+import type { MutableTheme, SelectedToken } from './interface';
 import type { TokenPanelProProps } from './token-panel-pro';
 import TokenPanelPro from './token-panel-pro';
 import ComponentDemoPro from './token-panel-pro/ComponentDemoPro';
+import { getColoredTheme } from './utils/getColoredTheme';
 import makeStyle from './utils/makeStyle';
-import {getColoredTheme} from "./utils/getColoredTheme";
 
 const useStyle = makeStyle('GlobalTokenEditor', (token) => ({
   [token.componentCls]: {

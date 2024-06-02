@@ -28,7 +28,7 @@ variables:
 
     # Deployment
     STAND_INGRESS_PREFIX: ant-token-previewer
-    DEV_STAND_ID: menkent
+    DEV_STAND_ID: prmo-menkent
     DEV_STAND_CHART: $PROJECT_NAME-$BUILD_VERSION.tgz
     REVIEW_STAND_CHART: $PROJECT_NAME-review-$BUILD_VERSION.tgz
     REVIEW_STAND_CHART_OPTIONS: --wait-for-jobs --set-string global.jobVersion=$CI_JOB_ID

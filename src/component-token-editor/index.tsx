@@ -232,7 +232,7 @@ const ComponentTokenEditor: FC<ComponentTokenEditorProps> = ({ theme }) => {
           ),
         })),
       })),
-    [locale],
+    [locale, prefixCls],
   );
 
   return (

@@ -6,11 +6,10 @@ import {
   Popover,
   Segmented,
   Switch,
-  theme as antdTheme,
   Tooltip,
+  theme as antdTheme,
 } from 'antd';
 import type { MutableTheme } from 'antd-token-previewer';
-import type { ThemeConfig } from 'antd/es/config-provider/context';
 import seed from 'antd/es/theme/themes/seed';
 import tokenMeta from 'antd/lib/version/token-meta.json';
 import classNames from 'classnames';
@@ -26,12 +25,12 @@ import type { SelectedToken } from '../interface';
 import { useLocale } from '../locale';
 import type { TokenCategory, TokenGroup } from '../meta/interface';
 import { HIGHLIGHT_COLOR } from '../utils/constants';
+import { getColor } from '../utils/getColor';
 import getDesignToken from '../utils/getDesignToken';
 import makeStyle from '../utils/makeStyle';
 import InputNumberPlus from './InputNumberPlus';
 import ResetTokenButton from './ResetTokenButton';
 import TokenPreview from './TokenPreview';
-import {getColor} from "../utils/getColor";
 
 const { Panel } = Collapse;
 
@@ -309,7 +308,9 @@ export type SeedTokenProps = {
 
 const getSeedValue = (theme: MutableTheme, token: string) => {
   // @ts-ignore
-  return theme.config.token?.[token] || seed[token] || getDesignToken(theme)[token];
+  return (
+    theme.config.token?.[token] || seed[token] || getDesignToken(theme)[token]
+  );
 };
 
 const seedRange: Record<string, { min: number; max: number }> = {
@@ -345,9 +346,7 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
   disabled,
   children,
 }) => {
-  const [tokenValue, setTokenValue] = useState(
-    getSeedValue(theme, tokenName),
-  );
+  const [tokenValue, setTokenValue] = useState(getSeedValue(theme, tokenName));
   const onThemeChange = (newValue: number | string) => {
     theme.onThemeChange?.(
       {
@@ -414,7 +413,11 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
           <ColorPicker
             theme={theme}
             onChangeComplete={(newColor) =>
-              onThemeChange(typeof newColor === 'string' ? newColor : newColor.toRgbString())
+              onThemeChange(
+                typeof newColor === 'string'
+                  ? newColor
+                  : newColor.toRgbString(),
+              )
             }
             value={tokenValue}
           >
@@ -439,7 +442,11 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
       {tokenName.startsWith('color') && (
         <ColorPicker
           theme={theme}
-          onChangeComplete={(newColor) => onThemeChange(typeof newColor === 'string' ? newColor : newColor.toRgbString())}
+          onChangeComplete={(newColor) =>
+            onThemeChange(
+              typeof newColor === 'string' ? newColor : newColor.toRgbString(),
+            )
+          }
           value={tokenValue}
         >
           {
@@ -534,11 +541,7 @@ const MapTokenCollapseContent: FC<MapTokenCollapseContentProps> = ({
           <SeedTokenPreview theme={theme} tokenName={mapToken}>
             <div className="token-panel-pro-token-collapse-map-collapse-preview">
               <div className="token-panel-pro-token-collapse-map-collapse-preview-color">
-                <TokenPreview
-                  theme={theme}
-                  tokenName={mapToken}
-                  type={type}
-                />
+                <TokenPreview theme={theme} tokenName={mapToken} type={type} />
               </div>
             </div>
           </SeedTokenPreview>

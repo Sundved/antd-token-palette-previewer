@@ -2,11 +2,8 @@ import type { GlobalToken, MapToken } from 'antd/es/theme/interface';
 import defaultMap from 'antd/es/theme/themes/default';
 import seed from 'antd/es/theme/themes/seed';
 import formatToken from 'antd/es/theme/util/alias';
-import type {MutableTheme} from "../interface";
-import {isPaletteColor} from "./isColor";
-import type {SeedToken} from "antd/es/theme/internal";
-import {getColoredToken} from "./getColoredTheme";
-import {palette} from "../consts/palette";
+import type { MutableTheme } from '../interface';
+import { getColoredToken } from './getColoredTheme';
 
 export default function getDesignToken(theme: MutableTheme): GlobalToken {
   const config = theme.config || {};
@@ -18,7 +15,7 @@ export default function getDesignToken(theme: MutableTheme): GlobalToken {
         undefined as any,
       )
     : mapFn(seedToken);
-  const coloredToken = getColoredToken(seedToken,false, config?.palette)
+  const coloredToken = getColoredToken(seedToken, false, config?.palette);
   const mergedMapToken = {
     ...mapToken,
     ...coloredToken,

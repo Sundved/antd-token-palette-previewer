@@ -14,7 +14,6 @@ import {
   TabletOutlined,
 } from '@ant-design/icons';
 import { Collapse, Space } from 'antd';
-import type { ThemeConfig } from 'antd/es/config-provider/context';
 import classNames from 'classnames';
 import useMergedState from 'rc-util/es/hooks/useMergedState';
 import type { ReactNode } from 'react';
