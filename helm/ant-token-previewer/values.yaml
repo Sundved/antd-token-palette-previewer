@@ -1,0 +1,19 @@
+global:
+  pullSecret: nexus-secret
+  repository: nexus.inno.tech
+  ingress:
+    suffix: ".prmo.inno.tech"
+    tlsSecret: dbp-tls-secret
+    usePrefix: true
+    useBasePath: false
+
+deployment:
+  image:
+    name: prmo/ant-token-previewer
+
+ingress:
+  prefix: ant-token-previewer
+  annotations:
+    rewriteTarget: /$1
+  paths:
+    - path: /(.*)

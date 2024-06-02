@@ -1,0 +1,17 @@
+apiVersion: v2
+kubeVersion: '>=1.14.0-0'
+type: application
+name: ant-token-previewer-review
+description: ant-token-previewer-review
+version: 1.0.1
+
+maintainers:
+  - name: Inno.Tech
+    email: dbp@inno.tech
+    url: https://inno.tech/
+
+dependencies:
+  - name: ant-token-previewer
+    alias: ant-token-previewer
+    version: ^1.0.1
+    repository: 'file://../ant-token-previewer'

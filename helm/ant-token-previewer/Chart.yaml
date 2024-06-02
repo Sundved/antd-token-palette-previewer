@@ -1,0 +1,16 @@
+apiVersion: v2
+kubeVersion: '>=1.14.0-0'
+type: application
+name: ant-token-previewer
+description: ant-token-previewer
+version: 1.0.1
+
+maintainers:
+  - name: Inno.Tech
+    email: dbp@inno.tech
+    url: https://inno.tech/
+
+dependencies:
+  - name: prmo-common
+    version: 1.0.2
+    repository: '@dbp'

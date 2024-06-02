@@ -1,0 +1,37 @@
+include:
+  project: prmo/infractructure-components/ci_templates
+  ref: latest
+  file:
+    - /pipelines/frontend_npm.yaml
+
+variables:
+    # Basic
+    PROJECT_NAME: ant-token-previewer
+    PROJECT_NAMESPACE: prmo
+
+    # Application
+    NODE_IMAGE: node:18.20.2
+    BUILD_OUTPUT_FOLDER: .doc
+    NPM_REGISTRY: "https://registry.npmjs.org"
+    NPM_REGISTRY_PUBLISH: "https://nexus.inno.tech/repository/prmo-hosted-npm-development"
+    NPMRC_FILE_CONTENTS: |-
+      registry=$NPM_REGISTRY
+      @prmo-core:registry=$NPM_REGISTRY_PUBLISH
+      strict-ssl=false
+      //nexus.inno.tech/repository/:_auth="$NPM_TOKEN"
+
+    # Configs
+    JEST_CONFIG_PATH: jest.config.js
+    SONAR_PROPERTIES_PATH: sonar.properties
+    HELM_DEPLOY_TIMEOUT: 15m
+    HELM_CHARTS: helm/$PROJECT_NAME helm/$PROJECT_NAME-review
+
+    # Deployment
+    STAND_INGRESS_PREFIX: ant-token-previewer
+    DEV_STAND_ID: menkent
+    DEV_STAND_CHART: $PROJECT_NAME-$BUILD_VERSION.tgz
+    REVIEW_STAND_CHART: $PROJECT_NAME-review-$BUILD_VERSION.tgz
+    REVIEW_STAND_CHART_OPTIONS: --wait-for-jobs --set-string global.jobVersion=$CI_JOB_ID
+
+    # Temporary solution for Sonar CLI issue
+    SONAR_IMAGE: sonarsource/sonar-scanner-cli:latest
