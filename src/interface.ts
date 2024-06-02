@@ -1,10 +1,11 @@
 import type { ThemeConfig } from 'antd';
 import type { ReactElement } from 'react';
+import type {Color} from "antd/es/color-picker";
 
 export type Theme = {
   name: string;
   key: string;
-  config: ThemeConfig;
+  config: ThemeConfig & {palette?: Record<string, string>};
 };
 
 export type AliasToken = Exclude<ThemeConfig['token'], undefined>;
@@ -35,4 +36,15 @@ export type SelectedToken = {
   seed?: string[];
   map?: string[];
   alias?: string[];
+};
+
+export type CustomPresetItem = {
+  label: string;
+  defaultOpen?: boolean;
+  colors: {name: string; color: string | Color; }[]
+};
+
+export type CustomPresetItemColor = {
+  name: string;
+  color: string | Color;
 };

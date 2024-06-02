@@ -3,9 +3,12 @@ import type { FC } from 'react';
 import React from 'react';
 import getColorBgImg from './utils/getColorBgImg';
 import makeStyle from './utils/makeStyle';
+import type {MutableTheme} from "./interface";
+import {getColor} from "./utils/getColor";
 
 export type ColorPreviewProps = {
   color: string;
+  theme?: MutableTheme;
   dark?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -41,9 +44,11 @@ const ColorPreview: FC<ColorPreviewProps> = ({
   className,
   dark,
   size = 20,
+  theme,
   ...restProps
 }) => {
   const [warpSSR, hashId] = useStyle();
+  const value = getColor(color, theme?.config?.palette);
 
   return warpSSR(
     <div
@@ -51,7 +56,7 @@ const ColorPreview: FC<ColorPreviewProps> = ({
       className={classNames('previewer-color-preview', className, hashId)}
       style={{
         // @ts-ignore
-        ['--antd-token-previewer-color-preview']: color,
+        ['--antd-token-previewer-color-preview']: value,
         width: size,
         height: size,
         ...style,

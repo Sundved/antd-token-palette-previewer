@@ -125,7 +125,7 @@ const TokenDetail: FC<TokenDetailProps> = ({
                 onChange={handleTokenChange(themeItem)}
                 value={
                   getValueByPath(themeItem.config, tokenPath) ??
-                  (getDesignToken(themeItem.config) as any)[tokenName]
+                  (getDesignToken(themeItem) as any)[tokenName]
                 }
               />
             </div>

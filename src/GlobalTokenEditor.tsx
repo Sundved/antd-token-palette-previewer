@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 import type { FC } from 'react';
 import React, { useState } from 'react';
-import type { SelectedToken, Theme } from './interface';
+import type {MutableTheme, SelectedToken, Theme} from './interface';
 import type { TokenPanelProProps } from './token-panel-pro';
 import TokenPanelPro from './token-panel-pro';
 import ComponentDemoPro from './token-panel-pro/ComponentDemoPro';
 import makeStyle from './utils/makeStyle';
+import {getColoredTheme} from "./utils/getColoredTheme";
 
 const useStyle = makeStyle('GlobalTokenEditor', (token) => ({
   [token.componentCls]: {
@@ -23,7 +24,7 @@ const useStyle = makeStyle('GlobalTokenEditor', (token) => ({
 }));
 
 export type GlobalTokenEditorProps = {
-  theme: Theme;
+  theme: MutableTheme;
   infoFollowPrimary?: boolean;
   onInfoFollowPrimaryChange?: (checked: boolean) => void;
   children?: React.ReactNode;
@@ -87,7 +88,7 @@ const GlobalTokenEditor: FC<GlobalTokenEditorProps> = (props) => {
       </div>
       {children || (
         <ComponentDemoPro
-          theme={theme}
+          theme={getColoredTheme(theme)}
           style={{ flex: 1, overflow: 'auto', height: '100%' }}
         />
       )}

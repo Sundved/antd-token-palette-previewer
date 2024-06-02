@@ -63,9 +63,10 @@ const ComponentTokenInput: FC<PropsWithChildren<ComponentTokenInputProps>> = ({
     return (
       <ColorPicker
         placement="bottomRight"
+        theme={theme}
         value={tokenValue}
         onChangeComplete={(newColor) => {
-          onThemeChange(newColor.toRgbString());
+          onThemeChange(typeof newColor === 'string' ? newColor : newColor.toRgbString());
         }}
       >
         {child}

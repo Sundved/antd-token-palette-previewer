@@ -277,7 +277,7 @@ const ComponentTokenEditor: FC<ComponentTokenEditorProps> = ({ theme }) => {
         <ConfigProvider theme={{ ...theme.config, inherit: false }}>
           <DemoWrapper>
             {ComponentDemos[activeComponent].map((item) => (
-              <DemoCard demo={item} key={item.key} />
+              <DemoCard theme={theme} demo={item} key={item.key} />
             ))}
           </DemoWrapper>
         </ConfigProvider>
@@ -391,7 +391,7 @@ const ComponentTokenEditor: FC<ComponentTokenEditorProps> = ({ theme }) => {
                   token,
                 ]);
                 const value =
-                  configValue ?? (getDesignToken(theme.config) as any)[token];
+                  configValue ?? (getDesignToken(theme) as any)[token];
                 return (
                   <TokenItem
                     key={token}

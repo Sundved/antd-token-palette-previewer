@@ -21,6 +21,7 @@ import type { Locale } from './locale';
 import { LocaleContext, zhCN } from './locale';
 import { HIGHLIGHT_COLOR } from './utils/constants';
 import makeStyle from './utils/makeStyle';
+import {getColoredTheme} from "./utils/getColoredTheme";
 
 const useStyle = makeStyle('ThemeEditor', (token) => ({
   [token.componentCls]: {

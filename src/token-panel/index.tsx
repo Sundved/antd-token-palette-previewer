@@ -332,7 +332,7 @@ export default forwardRef<TokenPanelRef, TokenPreviewProps>(
                     selectedTokens={selectedTokens}
                     onTokenSelect={onTokenSelect}
                     enableTokenSelect={enableTokenSelect}
-                    fallback={(config) => getDesignToken(config) as AliasToken}
+                    fallback={(theme) => getDesignToken(theme) as AliasToken}
                   />
                 ))}
               </div>

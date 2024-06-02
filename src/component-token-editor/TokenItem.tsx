@@ -150,6 +150,7 @@ const TokenItem: FC<TokenItemProps> = ({
           </span>
           {color && (
             <ColorPreview
+              theme={theme}
               size={16}
               color={value}
               style={{ marginLeft: 8, flex: 'none' }}

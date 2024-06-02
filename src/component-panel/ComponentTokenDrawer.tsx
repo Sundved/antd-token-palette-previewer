@@ -195,8 +195,8 @@ const ComponentTokenDrawer: FC<ComponentTokenDrawerProps> = ({
             title="Alias Token"
             tokenArr={aliasTokenData}
             tokenPath={['components', component]}
-            fallback={(themeConfig) =>
-              getDesignToken(themeConfig) as AliasToken
+            fallback={(fallbackTheme) =>
+              getDesignToken(fallbackTheme) as AliasToken
             }
             onTokenChange={(_, tokenName, value) =>
               handleComponentTokenChange(tokenName, value)

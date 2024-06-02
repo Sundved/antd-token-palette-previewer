@@ -31,6 +31,7 @@ import makeStyle from '../utils/makeStyle';
 import InputNumberPlus from './InputNumberPlus';
 import ResetTokenButton from './ResetTokenButton';
 import TokenPreview from './TokenPreview';
+import {getColor} from "../utils/getColor";
 
 const { Panel } = Collapse;
 
@@ -306,9 +307,9 @@ export type SeedTokenProps = {
   children?: ReactNode;
 };
 
-const getSeedValue = (config: ThemeConfig, token: string) => {
+const getSeedValue = (theme: MutableTheme, token: string) => {
   // @ts-ignore
-  return config.token?.[token] || seed[token] || getDesignToken(config)[token];
+  return theme.config.token?.[token] || seed[token] || getDesignToken(theme)[token];
 };
 
 const seedRange: Record<string, { min: number; max: number }> = {
@@ -345,7 +346,7 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
   children,
 }) => {
   const [tokenValue, setTokenValue] = useState(
-    getSeedValue(theme.config, tokenName),
+    getSeedValue(theme, tokenName),
   );
   const onThemeChange = (newValue: number | string) => {
     theme.onThemeChange?.(
@@ -367,8 +368,8 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
   };
 
   useEffect(() => {
-    setTokenValue(getSeedValue(theme.config, tokenName));
-  }, [theme.config, tokenName]);
+    setTokenValue(getSeedValue(theme, tokenName));
+  }, [theme, tokenName]);
 
   const tokenGroup = [
     'fontSize',
@@ -411,8 +412,9 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
       <>
         {tokenName.startsWith('color') ? (
           <ColorPicker
+            theme={theme}
             onChangeComplete={(newColor) =>
-              onThemeChange(newColor.toHexString())
+              onThemeChange(typeof newColor === 'string' ? newColor : newColor.toRgbString())
             }
             value={tokenValue}
           >
@@ -436,7 +438,8 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
     <div className="token-panel-pro-token-list-seed-block-sample">
       {tokenName.startsWith('color') && (
         <ColorPicker
-          onChangeComplete={(newColor) => onThemeChange(newColor.toHexString())}
+          theme={theme}
+          onChangeComplete={(newColor) => onThemeChange(typeof newColor === 'string' ? newColor : newColor.toRgbString())}
           value={tokenValue}
         >
           {
@@ -446,7 +449,7 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
             >
               <div
                 style={{
-                  backgroundColor: tokenValue,
+                  backgroundColor: getColor(tokenValue, theme?.config?.palette),
                   width: 48,
                   height: 32,
                   borderRadius: 6,
@@ -523,16 +526,16 @@ const MapTokenCollapseContent: FC<MapTokenCollapseContentProps> = ({
             <ResetTokenButton theme={theme} tokenName={mapToken} />
           </div>
           <span
-            title={(getDesignToken(theme.config) as any)[mapToken]}
+            title={(getDesignToken(theme) as any)[mapToken]}
             className="token-panel-pro-token-collapse-map-collapse-count"
           >
-            {(getDesignToken(theme.config) as any)[mapToken]}
+            {(getDesignToken(theme) as any)[mapToken]}
           </span>
           <SeedTokenPreview theme={theme} tokenName={mapToken}>
             <div className="token-panel-pro-token-collapse-map-collapse-preview">
               <div className="token-panel-pro-token-collapse-map-collapse-preview-color">
                 <TokenPreview
-                  theme={theme.config}
+                  theme={theme}
                   tokenName={mapToken}
                   type={type}
                 />

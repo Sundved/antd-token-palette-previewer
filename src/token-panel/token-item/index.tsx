@@ -1,6 +1,5 @@
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, Space } from 'antd';
-import type { ThemeConfig } from 'antd/es/config-provider/context';
 import classNames from 'classnames';
 import type { CSSProperties } from 'react';
 import React, { useEffect, useMemo } from 'react';
@@ -9,7 +8,7 @@ import { Pick } from '../../icons';
 import type { MutableTheme, TokenValue } from '../../interface';
 import TokenInput from '../../TokenInput';
 import getValueByPath from '../../utils/getValueByPath';
-import isColor from '../../utils/isColor';
+import {isColor} from '../../utils/isColor';
 import makeStyle from '../../utils/makeStyle';
 import { getRelatedComponents } from '../../utils/statistic';
 
@@ -30,7 +29,7 @@ interface TokenItemProps {
   onTokenSelect?: (token: string) => void;
   enableTokenSelect?: boolean;
   hideUsageCount?: boolean;
-  fallback?: (config: ThemeConfig) => Record<string, TokenValue>;
+  fallback?: (theme: MutableTheme) => Record<string, TokenValue>;
 }
 
 const AdditionInfo = ({
@@ -39,20 +38,23 @@ const AdditionInfo = ({
   tokenName,
   style,
   dark,
+  theme,
   ...rest
 }: {
   info: string | number;
   visible: boolean;
   tokenName: string;
   dark?: boolean;
+  theme?: MutableTheme;
   style?: CSSProperties;
   className?: string;
 }) => {
-  if (typeof info === 'string' && isColor(info)) {
+  if (typeof info === 'string' && isColor(info, theme?.config?.palette)) {
     return (
       <ColorPreview
         dark={dark}
         color={String(info)}
+        theme={theme}
         style={{ display: visible ? 'block' : 'none', ...style }}
       />
     );
@@ -273,15 +275,16 @@ export default ({
                     minWidth: themes.length * 20 + (themes.length - 1) * 4,
                   }}
                 >
-                  {themes.map(({ config, key }, index) => {
+                  {themes.map((theme, index) => {
                     return (
                       <AdditionInfo
-                        key={key}
-                        dark={key === 'dark'}
+                        key={theme.key}
+                        dark={theme.key === 'dark'}
                         tokenName={tokenName}
+                        theme={theme}
                         info={
-                          getValueByPath(config, [...tokenPath, tokenName]) ??
-                          fallback?.(config)[tokenName] ??
+                          getValueByPath(theme.config, [...tokenPath, tokenName]) ??
+                          fallback?.(theme)[tokenName] ??
                           ''
                         }
                         visible={!infoVisible}
@@ -324,7 +327,7 @@ export default ({
                     onChange={(value) => handleTokenChange(theme, value)}
                     value={
                       getValueByPath(theme.config, [...tokenPath, tokenName]) ??
-                      fallback?.(theme.config)[tokenName]
+                      fallback?.(theme)[tokenName]
                     }
                   />
                 </div>

@@ -1,12 +1,12 @@
 import { TinyColor } from '@ctrl/tinycolor';
-import type { ThemeConfig } from 'antd/es/config-provider/context';
 import type { FC } from 'react';
 import React from 'react';
 import getColorBgImg from '../utils/getColorBgImg';
 import getDesignToken from '../utils/getDesignToken';
+import type {MutableTheme} from "antd-token-previewer";
 
 export type TokenPreviewProps = {
-  theme: ThemeConfig;
+  theme: MutableTheme;
   tokenName: string;
   type?: string;
 };

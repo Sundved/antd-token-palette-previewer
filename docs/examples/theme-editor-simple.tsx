@@ -12,6 +12,7 @@ import antdZhCN from 'antd/locale/zh_CN';
 import React, { useEffect } from 'react';
 import { DarkTheme, Light } from '../../src/icons';
 import type { ThemeEditorMode } from '../../src/ThemeEditor';
+import {palette} from "../../src/consts/palette";
 
 const ANT_DESIGN_V5_CUSTOM_THEME_PRO = 'ant-design-v5-custom-theme-pro';
 
@@ -22,14 +23,10 @@ const Demo = () => {
   const [mode, setMode] = React.useState<ThemeEditorMode>('global');
   const [isDark, setIsDark] = React.useState(false);
   const [theme, setTheme] = React.useState<Theme>({
-    name: '自定义主题',
+    name: 'Our theme',
     key: 'secret theme',
     config: {
-      palette: {
-        blue: {
-          1: '#bbb'
-        }
-      }
+      palette
     },
   });
 
@@ -54,7 +51,7 @@ const Demo = () => {
       ANT_DESIGN_V5_CUSTOM_THEME_PRO,
       JSON.stringify(parsePlainConfig(theme.config)),
     );
-    messageApi.success('保存成功');
+    messageApi.success('Success');
   };
 
   return (
@@ -96,7 +93,7 @@ const Demo = () => {
                 style={{ marginRight: 8 }}
               />
               <Button type="primary" onClick={handleSave}>
-                保存
+                Save
               </Button>
             </>
           }

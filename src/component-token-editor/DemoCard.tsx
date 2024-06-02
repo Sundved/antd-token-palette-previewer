@@ -1,17 +1,23 @@
-import { Card, ConfigProvider, Tag, theme } from 'antd';
+import { Card, ConfigProvider, Tag, theme as antTheme} from 'antd';
 import type { FC } from 'react';
 import React, { useMemo, useState } from 'react';
-import type { ComponentDemo } from '../interface';
+import type {ComponentDemo, MutableTheme} from '../interface';
 import { useLocale } from '../locale';
 import { HIGHLIGHT_COLOR } from '../utils/constants';
+import {getColoredToken} from "../utils/getColoredTheme";
 
 export interface DemoCardProps {
   demo: ComponentDemo;
+  theme: MutableTheme;
 }
 
-const DemoCard: FC<DemoCardProps> = ({ demo: item }) => {
-  const { token } = theme.useToken();
+const DemoCard: FC<DemoCardProps> = ({ theme, demo: item }) => {
+  const antToken = antTheme.useToken();
+  const themeToken = theme.config?.token || {};
   const locale = useLocale();
+  const coloredToken = getColoredToken(themeToken,true, theme?.config?.palette);
+
+  const token = {...antToken.token, ...coloredToken};
 
   const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
 
@@ -43,7 +49,12 @@ const DemoCard: FC<DemoCardProps> = ({ demo: item }) => {
       <div style={{ padding: 20 }}>
         <ConfigProvider
           theme={{
-            token: tokenOverride,
+            token: {...coloredToken, ...tokenOverride},
+            components: theme.config?.components ? Object.keys(theme.config?.components).reduce((acc, key) => {
+              const value = (theme.config?.components as any)?.[key];
+              acc[key] = {...value, ...getColoredToken(value, true, theme.config.palette)}
+              return acc;
+            }, {} as any) : undefined
           }}
         >
           {item.demo}

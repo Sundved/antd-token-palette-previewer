@@ -51,7 +51,7 @@ interface TokenCardProps {
   enableTokenSelect?: boolean;
   hideUsageCount?: boolean;
   placeholder?: ReactNode;
-  fallback?: (config: ThemeConfig) => Record<string, TokenValue>;
+  fallback?: (theme: MutableTheme) => Record<string, TokenValue>;
 }
 
 export const IconMap: Record<TokenType, ReactNode> = {
