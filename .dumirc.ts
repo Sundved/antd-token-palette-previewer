@@ -21,7 +21,7 @@ export default defineConfig({
   outputPath: 'dist',
   ssr: process.env.NODE_ENV === 'production' ? {} : false,
   exportStatic: {},
-  base: '/',
-  publicPath: '/',
+  base: isProdSite ? '/antd-token-previewer/' : '/',
+  publicPath: isProdSite ? '/antd-token-previewer/' : '/',
   hash: true,
 });
