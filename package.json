@@ -37,7 +37,8 @@
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "test": "jest",
     "coverage": "umi-test --coverage",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "predeploy": "npm run build:prod"
   },
   "dependencies": {
     "@ant-design/colors": "^6",
