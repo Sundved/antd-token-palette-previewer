@@ -76,7 +76,7 @@ const TokenPanelPro: FC<TokenPanelProProps> = ({
 
   useEffect(() => {
     onTokenSelect?.(activeCategory?.seedToken ?? [], 'seed');
-  }, [activeCategory, onTokenSelect]);
+  }, [activeCategory]);
 
   const tokenListRef = useRef<HTMLDivElement>(null);
 

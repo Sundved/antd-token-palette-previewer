@@ -4,8 +4,8 @@ import {
   ConfigProvider,
   Segmented,
   Space,
-  Tooltip,
   theme as antdTheme,
+  Tooltip,
 } from 'antd';
 import type { FC, ReactNode } from 'react';
 import React, { memo, useEffect } from 'react';
@@ -127,7 +127,7 @@ const GlobalTokenDemos = (props: ComponentDemoProProps) => {
     if (nodesInitialized) {
       fitView();
     }
-  }, [nodesInitialized, fitView]);
+  }, [nodesInitialized]);
 
   return (
     <ReactFlow
