@@ -4,7 +4,7 @@ import { defineConfig } from 'dumi';
 const isProdSite =
   // 不是预览模式 同时是生产环境
   process.env.PREVIEW !== '1' && process.env.NODE_ENV === 'production';
-const sitePrefix = isProdSite ? '/antd-token-previewer' : '';
+const sitePrefix = isProdSite ? '/antd-token-palette-previewer' : '';
 
 export default defineConfig({
   themeConfig: {
@@ -21,7 +21,7 @@ export default defineConfig({
   outputPath: 'dist',
   ssr: process.env.NODE_ENV === 'production' ? {} : false,
   exportStatic: {},
-  base: isProdSite ? '/antd-token-previewer/' : '/',
-  publicPath: isProdSite ? '/antd-token-previewer/' : '/',
+  base: isProdSite ? '/antd-token-palette-previewer/' : '/',
+  publicPath: isProdSite ? '/antd-token-palette-previewer/' : '/',
   hash: true,
 });
