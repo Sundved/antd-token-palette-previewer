@@ -42,6 +42,7 @@ jobs:
     - run: npm run build:prod --if-present
   # Single deploy job since we're just deploying
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
