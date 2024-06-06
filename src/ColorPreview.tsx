@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import type { FC } from 'react';
 import React from 'react';
+import type { MutableTheme } from './interface';
+import { getColor } from './utils/getColor';
 import getColorBgImg from './utils/getColorBgImg';
 import makeStyle from './utils/makeStyle';
-import type {MutableTheme} from "./interface";
-import {getColor} from "./utils/getColor";
 
 export type ColorPreviewProps = {
   color: string;
@@ -48,7 +48,7 @@ const ColorPreview: FC<ColorPreviewProps> = ({
   ...restProps
 }) => {
   const [warpSSR, hashId] = useStyle();
-  const value = getColor(color, theme?.config?.palette);
+  const value = getColor(color, theme?.config);
 
   return warpSSR(
     <div

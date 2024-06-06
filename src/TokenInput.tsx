@@ -7,7 +7,7 @@ import ColorPanel from './ColorPanel';
 import ColorPreview from './ColorPreview';
 import type { MutableTheme } from './interface';
 import { useLocale } from './locale';
-import {isColor} from './utils/isColor';
+import { isColor } from './utils/isColor';
 import makeStyle from './utils/makeStyle';
 
 const useStyle = makeStyle('TokenInput', (token) => ({
@@ -153,7 +153,10 @@ const TokenInput: FC<TokenInputProps> = ({
   );
 
   let inputNode;
-  if (typeof valueRef.current === 'string' && isColor(valueRef.current, theme?.config?.palette)) {
+  if (
+    typeof valueRef.current === 'string' &&
+    isColor(valueRef.current, theme?.config)
+  ) {
     inputNode = (
       <Input
         bordered={false}

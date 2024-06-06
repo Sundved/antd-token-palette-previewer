@@ -6,8 +6,8 @@ import {
   Popover,
   Segmented,
   Switch,
-  Tooltip,
   theme as antdTheme,
+  Tooltip,
 } from 'antd';
 import type { MutableTheme } from 'antd-token-previewer';
 import seed from 'antd/es/theme/themes/seed';
@@ -420,6 +420,7 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
               )
             }
             value={tokenValue}
+            isComponent={false}
           >
             {children}
           </ColorPicker>
@@ -448,6 +449,7 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
             )
           }
           value={tokenValue}
+          isComponent={false}
         >
           {
             <div
@@ -456,7 +458,7 @@ const SeedTokenPreview: FC<SeedTokenProps> = ({
             >
               <div
                 style={{
-                  backgroundColor: getColor(tokenValue, theme?.config?.palette),
+                  backgroundColor: getColor(tokenValue, theme?.config),
                   width: 48,
                   height: 32,
                   borderRadius: 6,

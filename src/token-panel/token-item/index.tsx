@@ -8,7 +8,7 @@ import { Pick } from '../../icons';
 import type { MutableTheme, TokenValue } from '../../interface';
 import TokenInput from '../../TokenInput';
 import getValueByPath from '../../utils/getValueByPath';
-import {isColor} from '../../utils/isColor';
+import { isColor } from '../../utils/isColor';
 import makeStyle from '../../utils/makeStyle';
 import { getRelatedComponents } from '../../utils/statistic';
 
@@ -49,7 +49,7 @@ const AdditionInfo = ({
   style?: CSSProperties;
   className?: string;
 }) => {
-  if (typeof info === 'string' && isColor(info, theme?.config?.palette)) {
+  if (typeof info === 'string' && isColor(info, theme?.config)) {
     return (
       <ColorPreview
         dark={dark}
@@ -283,7 +283,10 @@ export default ({
                         tokenName={tokenName}
                         theme={theme}
                         info={
-                          getValueByPath(theme.config, [...tokenPath, tokenName]) ??
+                          getValueByPath(theme.config, [
+                            ...tokenPath,
+                            tokenName,
+                          ]) ??
                           fallback?.(theme)[tokenName] ??
                           ''
                         }

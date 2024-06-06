@@ -1,9 +1,10 @@
 import { TinyColor } from '@ctrl/tinycolor';
+import type { MutableTheme } from 'antd-token-previewer';
 import type { FC } from 'react';
 import React from 'react';
+import { getColor } from '../utils/getColor';
 import getColorBgImg from '../utils/getColorBgImg';
 import getDesignToken from '../utils/getDesignToken';
-import type {MutableTheme} from "antd-token-previewer";
 
 export type TokenPreviewProps = {
   theme: MutableTheme;
@@ -17,6 +18,8 @@ const TokenPreview: FC<TokenPreviewProps> = ({ theme, tokenName, type }) => {
   const isDark = new TinyColor(colorBgContainer).getBrightness() < 50;
 
   if (type === 'Color') {
+    const value = (getDesignToken(theme) as any)[tokenName];
+
     return (
       <div
         style={{
@@ -30,7 +33,7 @@ const TokenPreview: FC<TokenPreviewProps> = ({ theme, tokenName, type }) => {
           style={{
             height: '100%',
             width: '100%',
-            backgroundColor: (getDesignToken(theme) as any)[tokenName],
+            backgroundColor: getColor(value, theme?.config),
             transition: 'background-color 0.2s',
           }}
         />

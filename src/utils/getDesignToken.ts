@@ -15,7 +15,7 @@ export default function getDesignToken(theme: MutableTheme): GlobalToken {
         undefined as any,
       )
     : mapFn(seedToken);
-  const coloredToken = getColoredToken(seedToken, false, config?.palette);
+  const coloredToken = getColoredToken(seedToken, false, config);
   const mergedMapToken = {
     ...mapToken,
     ...coloredToken,
