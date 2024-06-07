@@ -11,6 +11,7 @@ import type { MutableTheme } from '../interface';
 import { useLocale } from '../locale';
 import ComponentDemos from '../previews/components';
 import deepUpdateObj from '../utils/deepUpdateObj';
+import { getColoredTheme } from '../utils/getColoredTheme';
 import getDesignToken from '../utils/getDesignToken';
 import getValueByPath from '../utils/getValueByPath';
 import makeStyle from '../utils/makeStyle';
@@ -274,7 +275,9 @@ const ComponentTokenEditor: FC<ComponentTokenEditorProps> = ({ theme }) => {
             </span>
           </div>
         </div>
-        <ConfigProvider theme={{ ...theme.config, inherit: false }}>
+        <ConfigProvider
+          theme={{ ...getColoredTheme(theme).config, inherit: false }}
+        >
           <DemoWrapper>
             {ComponentDemos[activeComponent].map((item) => (
               <DemoCard theme={theme} demo={item} key={item.key} />

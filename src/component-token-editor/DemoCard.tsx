@@ -56,6 +56,7 @@ const DemoCard: FC<DemoCardProps> = ({ theme, demo: item }) => {
                   acc[key] = {
                     ...value,
                     ...getColoredToken(value, true, theme.config),
+                    ...tokenOverride,
                   };
                   return acc;
                 }, {} as any)
