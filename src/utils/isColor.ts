@@ -2,11 +2,15 @@ import type { AliasToken, Theme } from '../interface';
 
 export function isColor(str: string, themeConfig?: Theme['config']) {
   return (
-    typeof str === 'string' &&
-    (str.startsWith('rgb') ||
-      str.startsWith('#') ||
-      isPaletteColor(str, themeConfig?.palette) ||
-      isGlobalColor(str, themeConfig?.token))
+    isNormalColor(str) ||
+    isPaletteColor(str, themeConfig?.palette) ||
+    isGlobalColor(str, themeConfig?.token)
+  );
+}
+
+export function isNormalColor(str: string) {
+  return (
+    typeof str === 'string' && (str.startsWith('rgb') || str.startsWith('#'))
   );
 }
 

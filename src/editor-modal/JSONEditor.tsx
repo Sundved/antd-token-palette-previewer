@@ -9,7 +9,7 @@ const Editor: React.FC<JSONEditorPropsOptional> = (props) => {
   useEffect(() => {
     editorRef.current = new JSONEditor({
       target: container.current as HTMLDivElement,
-      props: { mode: Mode.text },
+      props: { mode: props.mode || Mode.text },
     });
     return () => {
       editorRef.current?.destroy();

@@ -13,6 +13,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import type { OnChange } from 'vanilla-jsoneditor';
 import type { Theme } from '../interface';
 import { useLocale } from '../locale';
+import { convertForDev } from '../utils/convertForDev';
 import { parsePlainConfig, parseThemeConfig } from '../utils/parse-config';
 
 const JSONEditor = React.lazy(() => import('./JSONEditor'));
@@ -28,6 +29,7 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
   const locale = useLocale();
   const [messageApi, contextHolder] = message.useMessage();
   const { token } = antdTheme.useToken();
+  const [mode, setMode] = useState('design');
 
   const [content, setContent] = useState<{
     text: string;
@@ -70,6 +72,10 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
     URL.revokeObjectURL(objectUrl);
   };
 
+  const handleToggleMode = () => {
+    setMode((prevState) => (prevState === 'design' ? 'dev' : 'design'));
+  };
+
   const handleOk = () => {
     if (!editThemeFormatRight) {
       messageApi.error('主题 JSON 格式错误');
@@ -97,10 +103,17 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
         <div style={{ color: token.colorTextDescription, marginBottom: 12 }}>
           {locale.algorithmTip}
         </div>
+        <Button onClick={handleToggleMode} style={{ marginBottom: 12 }}>
+          {mode === 'design' ? 'Switch to Dev' : 'Switch to Design'}
+        </Button>
         <Suspense fallback={<Skeleton />}>
           <JSONEditor
-            content={content}
-            onChange={handleChange}
+            content={
+              mode === 'design'
+                ? content
+                : { text: convertForDev(content.text) }
+            }
+            onChange={mode === 'design' ? handleChange : undefined}
             mainMenuBar={false}
           />
         </Suspense>
