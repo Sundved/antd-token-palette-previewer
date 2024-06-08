@@ -1,6 +1,7 @@
 import type { MutableTheme } from 'antd-token-previewer';
+import { generateColor } from 'antd/es/color-picker/util';
 import type { AliasToken } from '../interface';
-import { isGlobalColor, isPaletteColor } from './isColor';
+import { isGlobalColor, isNormalColor, isPaletteColor } from './isColor';
 import { isNumber } from './validators';
 
 type ConvertType = {
@@ -27,6 +28,10 @@ const tokenToStr = ({ indent, item, obj, token, palette }: ConvertType) => {
   if (isNumber(value)) {
     return `${indent}${item}: ${value}`;
   }
+  if (isNormalColor(value) && (value as string).startsWith('rgb')) {
+    const color = generateColor(value);
+    return `${indent}${item}: '${color.toHexString()}'`;
+  }
   return `${indent}${item}: '${value}'`;
 };
 
@@ -52,8 +57,7 @@ export const convertForDev = (jsonText: string): string => {
       components = {},
     } = JSON.parse(jsonText) as MutableTheme['config'];
 
-    return `
-export const color = {
+    return `export const color = {
 ${Object.keys(palette)
   .sort()
   .map((item) => tokenToStr({ indent: '  ', item, obj: palette }))
@@ -89,6 +93,6 @@ ${(Object.keys(token) as (keyof AliasToken)[])
 };
 `;
   } catch (e) {
-    return '';
+    return 'Parse error';
   }
 };

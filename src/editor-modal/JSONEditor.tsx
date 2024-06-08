@@ -2,7 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import type { JSONEditorPropsOptional } from 'vanilla-jsoneditor';
 import { JSONEditor, Mode } from 'vanilla-jsoneditor';
 
-const Editor: React.FC<JSONEditorPropsOptional> = (props) => {
+const Editor: React.FC<JSONEditorPropsOptional & { visible?: boolean }> = ({
+  visible,
+  ...props
+}) => {
   const editorRef = useRef<JSONEditor | null>(null);
   const container = useRef<HTMLDivElement>(null);
 
@@ -20,7 +23,13 @@ const Editor: React.FC<JSONEditorPropsOptional> = (props) => {
     editorRef.current?.updateProps(props);
   }, [props]);
 
-  return <div ref={container} className="vanilla-jsoneditor-react" />;
+  return (
+    <div
+      ref={container}
+      className="vanilla-jsoneditor-react"
+      style={{ display: visible ? 'block' : 'none' }}
+    />
+  );
 };
 
 export default Editor;

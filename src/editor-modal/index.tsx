@@ -15,6 +15,7 @@ import type { Theme } from '../interface';
 import { useLocale } from '../locale';
 import { convertForDev } from '../utils/convertForDev';
 import { parsePlainConfig, parseThemeConfig } from '../utils/parse-config';
+import CompareUtil from './CompareUtil';
 
 const JSONEditor = React.lazy(() => import('./JSONEditor'));
 
@@ -30,6 +31,7 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { token } = antdTheme.useToken();
   const [mode, setMode] = useState('design');
+  const [showCompare, setShowCompare] = useState(false);
 
   const [content, setContent] = useState<{
     text: string;
@@ -75,6 +77,9 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
   const handleToggleMode = () => {
     setMode((prevState) => (prevState === 'design' ? 'dev' : 'design'));
   };
+  const handleToggleCompare = () => {
+    setShowCompare((prevState) => !prevState);
+  };
 
   const handleOk = () => {
     if (!editThemeFormatRight) {
@@ -108,15 +113,22 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
         </Button>
         <Suspense fallback={<Skeleton />}>
           <JSONEditor
-            content={
-              mode === 'design'
-                ? content
-                : { text: convertForDev(content.text) }
-            }
-            onChange={mode === 'design' ? handleChange : undefined}
+            content={content}
+            onChange={handleChange}
             mainMenuBar={false}
+            visible={mode === 'design'}
+          />
+          <JSONEditor
+            content={{ text: convertForDev(content.text) }}
+            mainMenuBar={false}
+            visible={mode === 'dev'}
+            readOnly
           />
         </Suspense>
+        <div style={{ marginTop: 24 }}>
+          <Button onClick={handleToggleCompare}>Compare Util</Button>
+          {showCompare && <CompareUtil newJsonText={content.text} />}
+        </div>
         <div style={{ marginBottom: -44, marginTop: 24 }}>
           <Upload
             customRequest={() => {}}
