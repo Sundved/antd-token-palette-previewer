@@ -53,7 +53,6 @@ const CompareUtil: React.FC<Props> = ({ newJsonText }) => {
             content={{ text: compareJson(newJsonText, content.text) }}
             mainMenuBar={false}
             visible={showDiff}
-            readOnly
           />
         </Suspense>
       </div>

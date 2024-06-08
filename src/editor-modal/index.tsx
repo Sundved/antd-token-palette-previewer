@@ -122,7 +122,6 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
             content={{ text: convertForDev(content.text) }}
             mainMenuBar={false}
             visible={mode === 'dev'}
-            readOnly
           />
         </Suspense>
         <div style={{ marginTop: 24 }}>
