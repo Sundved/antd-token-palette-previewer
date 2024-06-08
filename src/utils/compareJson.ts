@@ -12,9 +12,9 @@ const formatDiff = (
     text = text + `### ${title}\n`;
   }
   keys.forEach((item) => {
-    const fromTo =
-      newObj && oldObj ? ` from ${oldObj[item]} to ${newObj[item]}` : '';
-    text = text + `- ${item}${fromTo}\n`;
+    const from = oldObj ? ` from ${oldObj[item]}` : '';
+    const to = newObj ? ` to ${newObj[item]}` : '';
+    text = text + `- ${item}${from}${to}\n`;
   });
 
   return text;
@@ -40,7 +40,7 @@ const compareObj = (
       }, [] as string[])
     : [];
   const text =
-    formatDiff('Added', added) +
+    formatDiff('Added', added, newObj) +
     formatDiff('Removed', removed) +
     formatDiff('Updated', changes, newObj, oldObj);
   if (text) {
