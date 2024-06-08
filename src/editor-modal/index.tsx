@@ -15,6 +15,7 @@ import type { Theme } from '../interface';
 import { useLocale } from '../locale';
 import { convertForDev } from '../utils/convertForDev';
 import { parsePlainConfig, parseThemeConfig } from '../utils/parse-config';
+import { sortJson } from '../utils/sortJson';
 import CompareUtil from './CompareUtil';
 
 const JSONEditor = React.lazy(() => import('./JSONEditor'));
@@ -74,6 +75,12 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
     URL.revokeObjectURL(objectUrl);
   };
 
+  const handleSort = () => {
+    setContent({
+      text: JSON.stringify(sortJson(JSON.parse(content.text)), null, 2),
+    });
+  };
+
   const handleToggleMode = () => {
     setMode((prevState) => (prevState === 'design' ? 'dev' : 'design'));
   };
@@ -108,7 +115,13 @@ const EditorModal: FC<EditorModalProps> = ({ open, onCancel, onOk, theme }) => {
         <div style={{ color: token.colorTextDescription, marginBottom: 12 }}>
           {locale.algorithmTip}
         </div>
-        <Button onClick={handleToggleMode} style={{ marginBottom: 12 }}>
+        <Button onClick={handleSort} style={{ marginBottom: 12 }}>
+          Sort JSON
+        </Button>
+        <Button
+          onClick={handleToggleMode}
+          style={{ marginBottom: 12, marginLeft: 12 }}
+        >
           {mode === 'design' ? 'Switch to Dev' : 'Switch to Design'}
         </Button>
         <Suspense fallback={<Skeleton />}>
